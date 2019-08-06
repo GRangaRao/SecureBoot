@@ -1,0 +1,104 @@
+# -----------------------------------------------------------------------------
+# IRCONA Modifications:
+#
+# Author:         Ranga 
+# Company:        Ircona
+# Date:           14 Jan 2019
+# File Name:      CoreBootPayloadPkg\CoreBootPayloadPkg.dec
+# Bug Number:     6160
+# Description:    Pcd's Added  PcdFlashNvDBBase, PcdFlashNvKEKBase, PcdFlashNvPKBase   
+#                 PcdFlashKeySize are added      
+# -----------------------------------------------------------------------------
+# IRCONA Modifications:
+#
+# Author:         Ranga 
+# Company:        Ircona
+# Date:           8 Jan 2019
+# File Name:      CoreBootPayloadPkg\CoreBootPayloadPkg.dec
+# Bug Number:     6145
+# Description:    Pcd's for FlashBaseAddress, FlashSize, AcpiIoPortAddress are added  
+#                
+#
+# -----------------------------------------------------------------------------
+## @file
+# Coreboot Payload Package
+#
+# Provides drivers and definitions to create uefi payload for coreboot.
+#
+# Copyright (c) 2014, Intel Corporation. All rights reserved.<BR>
+# This program and the accompanying materials are licensed and made available under
+# the terms and conditions of the BSD License that accompanies this distribution.
+# The full text of the license may be found at
+# http://opensource.org/licenses/bsd-license.php.
+#
+# THE PROGRAM IS DISTRIBUTED UNDER THE BSD LICENSE ON AN "AS IS" BASIS,
+# WITHOUT WARRANTIES OR REPRESENTATIONS OF ANY KIND, EITHER EXPRESS OR IMPLIED.
+#
+##
+
+[Defines]
+  DEC_SPECIFICATION              = 0x00010005
+  PACKAGE_NAME                   = CorebootPayloadPkg
+  PACKAGE_GUID                   = 58ABC905-951E-472e-8590-77BA8A50BE63
+  PACKAGE_VERSION                = 0.1
+
+#IrconaMod 
+[Includes]
+  Include
+#IrconaMod End
+[LibraryClasses]
+
+[Guids]
+  #
+  ## Defines the token space for the Coreboot Payload Package PCDs.
+  #
+  gUEfiCorebootPayloadPkgTokenSpaceGuid  = {0x1d127ea, 0xf6f1, 0x4ef6, {0x94, 0x15, 0x8a, 0x0, 0x0, 0x93, 0xf8, 0x9d}}
+
+  #
+  # Gop Temp
+  #
+  gBmpImageGuid                           = { 0x878AC2CC, 0x5343, 0x46F2, { 0xB5, 0x63, 0x51, 0xF8, 0x9D, 0xAF, 0x56, 0xBA } }
+  gBootStateGuid                          = { 0x60b5e939, 0x0fcf, 0x4227, { 0xba, 0x83, 0x6b, 0xbe, 0xd4, 0x5b, 0xc0, 0xe3 }}
+
+[Ppis]
+
+#IrconaMod 
+[Protocols]
+  #
+  # Gop Temp
+  #
+  gPlatformGOPPolicyGuid                  = { 0xec2e931b, 0x3281, 0x48a5, { 0x81, 0x07, 0xdf, 0x8a, 0x8b, 0xed, 0x3c, 0x5d } }
+  #IrconaMod
+  gEfiActiveBiosProtocolGuid              = { 0xebbe2d1b, 0x1647, 0x4bda, { 0xab, 0x9a, 0x78, 0x63, 0xe3, 0x96, 0xd4, 0x1a } }
+  gScSpiProtocolGuid                      = { 0x1156efc6, 0xea32, 0x4396, {0xb5, 0xd5, 0x26, 0x93, 0x2e, 0x83, 0xc3, 0x13}}
+  gFlashDeviceInfoProtocolGuid                = { 0xcdd3ef06, 0xe873, 0x46ee, { 0xa0, 0x64, 0x7e, 0xc0, 0xb2, 0xc5, 0x6c, 0x11 }}
+
+#IrconaMod end
+  
+  
+  #IrconaMod End
+################################################################################
+#
+# PCD Declarations section - list of all PCDs Declared by this Package
+#                            Only this package should be providing the
+#                            declaration, other packages should not.
+#
+################################################################################
+[PcdsFixedAtBuild, PcdsPatchableInModule]
+#IrconaMod #6145 PCD's for Variable Services
+ gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdFlashAreaBaseAddress|0xFFA00000|UINT32|10 
+ gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdFlashAreaSize|0x600000|UINT32|11  
+ gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdScAcpiIoPortBaseAddress|0x1800|UINT16|0x10000210
+#IrconaMod End
+#IrconaMod #6160 PCD's for SecureBoot Keys
+ gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdFlashNvDBBase|0xFFD80000|UINT32|0x10000211 
+ gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdFlashNvDBXBase|0xFFD86000|UINT32|0x10000212
+ gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdFlashNvKEKBase|0xFFD88000|UINT32|0x10000213  
+ gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdFlashNvPKBase|0xFFD8A000|UINT32|0x10000214
+ gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdMaxDBNum|1|UINT32|0x10000215
+ gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdMaxKEKNum|1|UINT32|0x10000216
+ gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdMaxDBXNum|1|UINT32|0x10000217
+ gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdFlashKeySize|2216|UINT32|0x10000218
+#IrconaMod end 
+[PcdsDynamic, PcdsDynamicEx]
+
