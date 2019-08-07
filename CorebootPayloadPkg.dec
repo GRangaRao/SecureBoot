@@ -1,25 +1,4 @@
-# -----------------------------------------------------------------------------
-# IRCONA Modifications:
-#
-# Author:         Ranga 
-# Company:        Ircona
-# Date:           14 Jan 2019
-# File Name:      CoreBootPayloadPkg\CoreBootPayloadPkg.dec
-# Bug Number:     6160
-# Description:    Pcd's Added  PcdFlashNvDBBase, PcdFlashNvKEKBase, PcdFlashNvPKBase   
-#                 PcdFlashKeySize are added      
-# -----------------------------------------------------------------------------
-# IRCONA Modifications:
-#
-# Author:         Ranga 
-# Company:        Ircona
-# Date:           8 Jan 2019
-# File Name:      CoreBootPayloadPkg\CoreBootPayloadPkg.dec
-# Bug Number:     6145
-# Description:    Pcd's for FlashBaseAddress, FlashSize, AcpiIoPortAddress are added  
-#                
-#
-# -----------------------------------------------------------------------------
+
 ## @file
 # Coreboot Payload Package
 #
@@ -62,7 +41,6 @@
 
 [Ppis]
 
-#IrconaMod 
 [Protocols]
   #
   # Gop Temp
@@ -73,10 +51,8 @@
   gScSpiProtocolGuid                      = { 0x1156efc6, 0xea32, 0x4396, {0xb5, 0xd5, 0x26, 0x93, 0x2e, 0x83, 0xc3, 0x13}}
   gFlashDeviceInfoProtocolGuid                = { 0xcdd3ef06, 0xe873, 0x46ee, { 0xa0, 0x64, 0x7e, 0xc0, 0xb2, 0xc5, 0x6c, 0x11 }}
 
-#IrconaMod end
   
   
-  #IrconaMod End
 ################################################################################
 #
 # PCD Declarations section - list of all PCDs Declared by this Package
@@ -89,8 +65,6 @@
  gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdFlashAreaBaseAddress|0xFFA00000|UINT32|10 
  gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdFlashAreaSize|0x600000|UINT32|11  
  gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdScAcpiIoPortBaseAddress|0x1800|UINT16|0x10000210
-#IrconaMod End
-#IrconaMod #6160 PCD's for SecureBoot Keys
  gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdFlashNvDBBase|0xFFD80000|UINT32|0x10000211 
  gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdFlashNvDBXBase|0xFFD86000|UINT32|0x10000212
  gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdFlashNvKEKBase|0xFFD88000|UINT32|0x10000213  
@@ -99,6 +73,5 @@
  gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdMaxKEKNum|1|UINT32|0x10000216
  gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdMaxDBXNum|1|UINT32|0x10000217
  gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdFlashKeySize|2216|UINT32|0x10000218
-#IrconaMod end 
 [PcdsDynamic, PcdsDynamicEx]
 
