@@ -1,23 +1,4 @@
-# -----------------------------------------------------------------------------
-#
-# Author:         Ranga 
-# Company:        Ircona
-# Date:           08 Feb 2019
-# File Name:      CoreBootPayloadPkg\CoreBootPayloadPkg.fdf
-# Bug Number:     6153
-# Description:    Enabled SecureBoot
-#
-# -----------------------------------------------------------------------------
-# IRCONA Modifications:
-#
-# Author:         Ranga 
-# Company:        Ircona
-# Date:           8 Jan 2019
-# File Name:      CoreBootPayloadPkg\CoreBootPayloadPkg.fdf
-# Bug Number:     6145
-# Description:    Drivers are included in the flashlayout for Variable services
-#                 look for IrconaMod headers
-# -----------------------------------------------------------------------------
+
 ## @file
 # Coreboot Payload Package
 #
@@ -185,7 +166,7 @@ INF MdeModulePkg/Bus/Ata/AtaAtapiPassThru/AtaAtapiPassThru.inf
 INF MdeModulePkg/Bus/Scsi/ScsiBusDxe/ScsiBusDxe.inf
 INF MdeModulePkg/Bus/Scsi/ScsiDiskDxe/ScsiDiskDxe.inf
 
-#IrconaMod
+
 #Variable services 
 !if $(VARIABLE_SERVICES_RUNTIME) == FALSE
 
@@ -196,14 +177,14 @@ INF CorebootPayloadPkg/SpiFvbService/SpiFvbServiceDxe.inf
 INF MdeModulePkg/Universal/Variable/RuntimeDxe/VariableRuntimeDxe.inf
 INF CorebootPayloadPkg/RuntimeDxe/ScSpiRuntime.inf
 !endif
-#IrconaMod end
 
-#Ircona
+
+
 #Add the Drivers Needed for SecureBoot in the Payload
 !if $(SECURE_BOOT_ENABLE) == TRUE
 INF SecurityPkg/VariableAuthenticated/SecureBootConfigDxe/SecureBootConfigDxe.inf
 !endif
-#IrconaMod end
+
 
 
 INF FatPkg/EnhancedFatDxe/Fat.inf
