@@ -1,43 +1,4 @@
-# -----------------------------------------------------------------------------
-#
-# Author:         Ranga 
-# Company:        Ircona
-# Date:           14 Feb 2019
-# File Name:      CoreBootPayloadPkg\CoreBootPayloadPkgIa32X64.dsc
-# Bug Number:     6160
-# Description:    Defined offsets for PcdFlashNvDBBase,PcdFlashNvKEKBase,PcdFlashNvPKBase
-#
-# -----------------------------------------------------------------------------
-#
-# Author:         Ranga 
-# Company:        Ircona
-# Date:           08 Feb 2019
-# File Name:      CoreBootPayloadPkg\CoreBootPayloadPkgIa32X64.dsc
-# Bug Number:     6153
-# Description:    Enabled SecureBoot
-#
-# -----------------------------------------------------------------------------
-#
-# Author:         Ranga 
-# Company:        Ircona
-# Date:           04 Feb 2019
-# File Name:      CoreBootPayloadPkg\CoreBootPayloadPkgIa32X64.dsc
-# Bug Number:     6151
-# Description:    removed unused PCD's for ErrorLevel,DebugPrint which are causing
-#                 warnings
-#
-# -----------------------------------------------------------------------------
-# IRCONA Modifications:
-#
-# Author:         Ranga 
-# Company:        Ircona
-# Date:           8 Jan 2019
-# File Name:      CoreBootPayloadPkg\CoreBootPayloadPkgIa32X64.dsc
-# Bug Number:     6145
-# Description:    Drivers and Libraries Added for Variable Services along with  
-#                 PCD's, look for IrconaMod Headers
-#
-# -----------------------------------------------------------------------------
+
 ## @file
 # Coreboot Payload Package
 #
@@ -69,14 +30,10 @@
   SKUID_IDENTIFIER                    = DEFAULT
   OUTPUT_DIRECTORY                    = Build/CorebootPayloadPkgX64
   FLASH_DEFINITION                    = CorebootPayloadPkg/CorebootPayloadPkg.fdf
-  #IrconaMod 
   DEFINE SECURE_BOOT_ENABLE      = FALSE 
-  #IrconaMod End
   DEFINE SOURCE_DEBUG_ENABLE     = FALSE
   
-  #IrconaMod 
   DEFINE VARIABLE_SERVICES_RUNTIME = TRUE
-  #IrconaMod End
   #
   # CPU options
   #
@@ -187,22 +144,22 @@
   PeCoffGetEntryPointLib|MdePkg/Library/BasePeCoffGetEntryPointLib/BasePeCoffGetEntryPointLib.inf
   CacheMaintenanceLib|MdePkg/Library/BaseCacheMaintenanceLib/BaseCacheMaintenanceLib.inf
   TpmMeasurementLib|MdeModulePkg/Library/TpmMeasurementLibNull/TpmMeasurementLibNull.inf
-#IrconaMod 
+
 #Enable Authentication Lib needed for Image verification
 !if $(SECURE_BOOT_ENABLE) == TRUE
       AuthVariableLib|SecurityPkg/Library/AuthVariableLib/AuthVariableLib.inf
 !else
       AuthVariableLib|MdeModulePkg/Library/AuthVariableLibNull/AuthVariableLibNull.inf
 !endif
-#IrconaMod End
+
   VarCheckLib|MdeModulePkg/Library/VarCheckLib/VarCheckLib.inf
-#IrconaMod  
+ 
 #Spi Flash Libraries used by Variable Services Runtime drivers
  !if $(VARIABLE_SERVICES_RUNTIME) == TRUE
  PchSpiCommonLib|CorebootPayloadPkg/Library/BasePchSpiCommonLib/BasePchSpiCommonLib.inf 
  SpiFlashCommonLib|CorebootPayloadPkg/Library/DxeSpiFlashCommonLib/DxeSpiFlashCommonLib.inf
  !endif 
-#IrconaMod end 
+
   #
   # UEFI & PI
   #
@@ -248,7 +205,7 @@
   PlatformBootManagerLib|CorebootPayloadPkg/Library/PlatformBootManagerLib/PlatformBootManagerLib.inf
   IoApicLib|PcAtChipsetPkg/Library/BaseIoApicLib/BaseIoApicLib.inf
   CbPlatformSupportLib|CorebootModulePkg/Library/CbPlatformSupportLibNull/CbPlatformSupportLibNull.inf
-# IrconaMod
+
 # Libraries needed for SecurBoot
   !if $(SECURE_BOOT_ENABLE) == TRUE
     BaseCryptLib|CryptoPkg/Library/BaseCryptLib/BaseCryptLib.inf
@@ -256,7 +213,7 @@
     OpensslLib|CryptoPkg/Library/OpensslLib/OpensslLib.inf
     PlatformSecureLib|SecurityPkg/Library/PlatformSecureLibNull/PlatformSecureLibNull.inf
   !endif
-# IrconaMod end
+
   #
   # Misc
   #
@@ -319,12 +276,11 @@
   MemoryAllocationLib|MdePkg/Library/UefiMemoryAllocationLib/UefiMemoryAllocationLib.inf
   ReportStatusCodeLib|MdeModulePkg/Library/RuntimeDxeReportStatusCodeLib/RuntimeDxeReportStatusCodeLib.inf
   
-#IrconaMod
+
 #RunTime Library needed or SECUREBOOT
 !if $(SECURE_BOOT_ENABLE)  == TRUE
   BaseCryptLib|CryptoPkg/Library/BaseCryptLib/RuntimeCryptLib.inf
 !endif
-#IrconaMod end
 
 [LibraryClasses.common.UEFI_DRIVER,LibraryClasses.common.UEFI_APPLICATION]
   PcdLib|MdePkg/Library/DxePcdLib/DxePcdLib.inf
@@ -344,7 +300,6 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdConOutUgaSupport|FALSE
 
 [PcdsFixedAtBuild]
-#IrconaMod
 #PcdMaxVariableSize set to 0x8000 when SecureBoot Enabled for Authentication data
   !if $(SECURE_BOOT_ENABLE) == TRUE
   gEfiMdeModulePkgTokenSpaceGuid.PcdMaxVariableSize|0x8000
@@ -354,7 +309,6 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdMaxHardwareErrorVariableSize|0x8000
   gEfiMdeModulePkgTokenSpaceGuid.PcdVariableStoreSize|0x10000
 
-  #IrconaMod #6145 PCD's for Variable Services
   #Variable services Variable Store Offset, FTW, Spare Base address
   gEfiMdeModulePkgTokenSpaceGuid.PcdVariableStoreSize            | 0x00010000
   gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableSize   | 0x0003E000
@@ -364,8 +318,6 @@
   gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageVariableBase   | 0xFFD00000
   gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwWorkingBase | 0xFFD3E000  
   gEfiMdeModulePkgTokenSpaceGuid.PcdFlashNvStorageFtwSpareBase   | 0xFFD40000
-  #IrconaMod #6160 PCD's for SecureBoot Keys
-  #Added PCD's for SecureBoot Keys
   #DB, DBX, KEK can be more than 1,
   #PK will be only 1 for platform
   gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdFlashNvDBBase   | 0xFFD80000
@@ -375,11 +327,9 @@
   gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdMaxDBNum        | 0x1
   gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdMaxKEKNum       | 0x1
   gUEfiCorebootPayloadPkgTokenSpaceGuid.PcdMaxDBXNum       | 0x1
-  #IrconaMod End
   # commenting the Debug PCD's which would throw warning during build 
   #   gEfiMdePkgTokenSpaceGuid.PcdDebugPropertyMask|0x1f
   #   gEfiMdePkgTokenSpaceGuid.PcdDebugPrintErrorLevel|0x80000040   
-  #IrconaMod End
  
   gEfiMdeModulePkgTokenSpaceGuid.PcdVpdBaseAddress|0x0
   gEfiMdeModulePkgTokenSpaceGuid.PcdUse1GPageTable|TRUE
@@ -531,7 +481,6 @@
   MdeModulePkg/Universal/ResetSystemRuntimeDxe/ResetSystemRuntimeDxe.inf
   PcAtChipsetPkg/PcatRealTimeClockRuntimeDxe/PcatRealTimeClockRuntimeDxe.inf
 
-#IrconaMod 
 !if $(VARIABLE_SERVICES_RUNTIME) == FALSE
  MdeModulePkg/Universal/Variable/EmuRuntimeDxe/EmuVariableRuntimeDxe.inf
 !else
@@ -542,7 +491,6 @@
  CorebootPayloadPkg/SpiFvbService/SpiFvbServiceDxe.inf 
  MdeModulePkg/Universal/Variable/RuntimeDxe/VariableRuntimeDxe.inf{
   <LibraryClasses>
-#IrconaMod
 #Enable the Authentication Lib for SecureBoot
 !if $(SECURE_BOOT_ENABLE) == TRUE
       PlatformSecureLib|SecurityPkg/Library/PlatformSecureLibNull/PlatformSecureLibNull.inf
@@ -551,7 +499,6 @@
       AuthVariableLib|MdeModulePkg/Library/AuthVariableLibNull/AuthVariableLibNull.inf
       TpmMeasurementLib|MdeModulePkg/Library/TpmMeasurementLibNull/TpmMeasurementLibNull.inf
 !endif
-#IrconaMod End
  # TpmMeasurementLib|MdeModulePkg/Library/TpmMeasurementLibNull/TpmMeasurementLibNull.inf
  # AuthVariableLib|MdeModulePkg/Library/AuthVariableLibNull/AuthVariableLibNull.inf
   VarCheckLib|MdeModulePkg/Library/VarCheckLib/VarCheckLib.inf
@@ -561,7 +508,6 @@
   PchSpiCommonLib|CorebootPayloadPkg/Library/BasePchSpiCommonLib/BasePchSpiCommonLib.inf 
 }
 !endif
-#IrconaMod end
 
   #
   # Following are the DXE drivers
@@ -603,7 +549,6 @@
       PciHostBridgeLib|CorebootPayloadPkg/Library/PciHostBridgeLib/PciHostBridgeLib.inf
   }
 
-#IrconaMod
 #Enable the Stub Driver for Image Verification
 !if $(SECURE_BOOT_ENABLE) == TRUE
 MdeModulePkg/Universal/SecurityStubDxe/SecurityStubDxe.inf {
@@ -612,7 +557,6 @@ MdeModulePkg/Universal/SecurityStubDxe/SecurityStubDxe.inf {
 	}
   SecurityPkg/VariableAuthenticated/SecureBootConfigDxe/SecureBootConfigDxe.inf
 !endif 
-#IrconaMod End
   #
   # SCSI/ATA/IDE/DISK Support
   #
